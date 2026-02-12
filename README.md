@@ -64,10 +64,10 @@ Proje yapısı, sorumlulukların ayrılığı (Separation of Concerns) ilkesine 
 <img width="1906" height="1080" alt="10" src="https://github.com/user-attachments/assets/3995518e-b13a-464f-a54f-807e1731f287" />
 <img width="1906" height="1077" alt="11" src="https://github.com/user-attachments/assets/2a0451ca-32f4-46b4-b8b5-8b1c274dbf98" />
 <img width="1906" height="1080" alt="12" src="https://github.com/user-attachments/assets/d590e35b-b16a-4f9e-bea7-9259dd3903ea" />
-<img width="1904" height="1080" alt="13" src="https://github.com/user-attachments/assets/f7badc23-566a-4686-a00c-b4792acbf662" />
+<img width="1904" height="1080" alt="13" src="https://github.com/user-attachments/assets/90273aac-71b7-489a-bb5e-f1308eba89bd" />
 <img width="1905" height="1077" alt="14" src="https://github.com/user-attachments/assets/4a1c72f0-7d3e-47aa-bdef-6c26a4290697" />
-<img width="1918" height="1080" alt="Admin1" src="https://github.com/user-attachments/assets/b8a45705-0d45-4a29-9894-ad8ba88b04c1" />
+<img width="1919" height="1080" alt="Admin1" src="https://github.com/user-attachments/assets/1cb20747-b43c-48a9-af59-d6cec4e2997b" />
 <img width="1920" height="1080" alt="Admin2" src="https://github.com/user-attachments/assets/6d83b5e4-3ee6-473e-9ed8-c385332e48e3" />
-<img width="1919" height="1080" alt="Admin3" src="https://github.com/user-attachments/assets/2d35d47c-f5c1-443f-a9b2-2c182f8c53d2" />
+<img width="1918" height="1080" alt="Admin3" src="https://github.com/user-attachments/assets/d79876b5-379d-49e4-83fc-0e7600e20112" />
 <img width="1918" height="1080" alt="Admin4" src="https://github.com/user-attachments/assets/c653f5f6-d254-4d02-a73c-c043735e1390" />
 <img width="1919" height="1080" alt="Admin5" src="https://github.com/user-attachments/assets/36ccd62f-511a-4b5a-abfe-56f91e678612" />
