@@ -1,91 +1,55 @@
-# 🍞 MyAcademy_CQRS - Bakery E-Commerce Project
+# 🍞 MyAcademy_CQRS - Fırın (Bakery) E-Ticaret Projesi
 
-A comprehensive E-Commerce Web Application built with **ASP.NET Core 9.0**, designed to demonstrate modern software architecture patterns including **CQRS**, **Mediator**, **Observer**, and **Unit of Work**.
+Modern yazılım mimarisi desenlerini (**CQRS**, **Mediator**, **Observer**, **Unit of Work**) kullanarak geliştirilmiş, **ASP.NET Core 9.0** tabanlı kapsamlı bir E-Ticaret Web Uygulamasıdır.
 
-This project simulates a real-world "Bakery" business, featuring a robust Admin Panel for management and a user-friendly UI for customers to browse products, read testimonials, and place orders.
+Bu proje, gerçek dünyadaki bir "Fırın/Pastane" işletmesini simüle eder. Yönetim için güçlü bir **Admin Paneli** ve müşterilerin ürünleri inceleyip sipariş verebileceği kullanıcı dostu bir **Arayüz (UI)** içerir.
 
-## 🚀 Key Features
+## 🚀 Temel Özellikler
 
-*   **CQRS Architecture**: Separation of Read (Query) and Write (Command) operations for scalability and maintainability.
-*   **Mediator Pattern**: Decoupled request/response handling using `MediatR` library.
-*   **Design Patterns:**
-    *   **Unit of Work**: Centralized transaction management.
-    *   **Observer**: Event-driven architecture for logging/notifications (Order, Contact, Campaign events).
-    *   **Repository**: Abstraction layer for data access.
-*   **Cloudinary Integration**: Cloud-based image storage and management for products and gallery.
-*   **AutoMapper**: Efficient object-to-object mapping for entities and DTOs.
-*   **Modern Admin Panel**: User-friendly dashboard for managing all aspects of the application.
-*   **Dynamic UI**: Responsive frontend built with Razor Views and custom CSS.
+*   **CQRS Mimarisi**: Okuma (Query) ve Yazma (Command) işlemlerinin ayrıştırılmasıyla ölçeklenebilirlik ve bakım kolaylığı sağlar.
+*   **Mediator Deseni**: `MediatR` kütüphanesi kullanılarak istek/yanıt (request/response) süreçleri gevşek bağlı (decoupled) hale getirilmiştir.
+*   **Tasarım Desenleri:**
+    *   **Unit of Work**: Veritabanı işlemlerinde (transaction) bütünlüğü garanti altına alır.
+    *   **Observer**: Sipariş, kampanya ve iletişim gibi olaylarda (event) loglama ve bildirim mekanizmaları için kullanılmıştır.
+    *   **Repository**: Veri erişim katmanını soyutlar.
+*   **Cloudinary Entegrasyonu**: Ürün ve galeri görselleri bulut tabanlı olarak (Cloudinary) saklanır ve yönetilir.
+*   **AutoMapper**: Entity ve DTO nesneleri arasında otomatik ve performanslı eşleme sağlar.
+*   **Modern Admin Paneli**: Uygulamanın tüm yönlerini yönetmek için geliştirilmiş, istatistikler içeren paneli.
+*   **Dinamik Arayüz**: Razor View ve özelleştirilmiş CSS ile geliştirilmiş, responsive (mobil uyumlu) ön yüz.
 
-## 🛠️ Tech Stack & Libraries
+## 🛠️ Teknolojiler ve Kütüphaneler
 
 *   **Framework**: .NET 9.0 (ASP.NET Core MVC)
-*   **Database**: Microsoft SQL Server (Entity Framework Core 9.0 - Code First)
+*   **Veritabanı**: Microsoft SQL Server (Entity Framework Core 9.0 - Code First)
 *   **CQRS & Mediator**: `MediatR` (v12.5.0)
 *   **Mapping**: `AutoMapper` (v13.0.1)
-*   **Cloud Storage**: `CloudinaryDotNet` (v1.28.0)
+*   **Bulut Depolama**: `CloudinaryDotNet` (v1.28.0)
 *   **Frontend**: Razor Views, Bootstrap, HTML5, CSS3, jQuery
 *   **IDE**: Visual Studio 2022
 
-## 📦 Modules & Entities
+## 📦 Modüller ve Entity'ler
 
-The application allows full management of the following entities:
+Uygulama aşağıdaki modüllerin tam yönetimini sağlar:
 
-*   **🛒 Products & Categories**: Manage bakery items and their categories.
-*   **📦 Orders**: Track customer orders and status.
-*   **🖼️ Photo Gallery**: Upload and manage gallery images (stored in Cloudinary).
-*   **📢 Campaigns & Promotions**: Create special offers and marketing campaigns.
-*   **💬 Testimonials**: Manage customer reviews and feedback.
-*   **slider**: Customize homepage sliders.
-*   **📞 Contact**: View and manage customer messages.
-*   **Other**: Services, Our History, Three Step Service modules.
+*   **🛒 Ürünler ve Kategoriler**: Pasta, ekmek ve diğer ürünlerin kategori bazlı yönetimi.
+*   **📦 Siparişler**: Müşteri siparişlerinin takibi ve durum yönetimi.
+*   **🖼️ Fotoğraf Galerisi**: İşletme fotoğraflarının buluta yüklenmesi ve galeride gösterimi.
+*   **📢 Kampanyalar ve İndirimler**: Özel tekliflerin ve pazarlama kampanyalarının oluşturulması.
+*   **💬 Müşteri Yorumları (Testimonials)**: Müşteri geri bildirimlerinin yönetimi.
+*   **Slider**: Anasayfa kaydırıcı (slider) alanının yönetimi.
+*   **📞 İletişim**: Müşteri mesajlarının görüntülenmesi ve takibi.
+*   **Diğer**: Hizmetler, Tarihçemiz, 3 Adımlı Servis gibi kurumsal içerik modülleri.
 
-## ⚙️ Installation & Setup
+## 🏗️ Mimari Genel Bakış
 
-1.  **Clone the repository**
-    ```bash
-    git clone https://github.com/your-username/MyAcademy_CQRS.git
-    ```
+Proje yapısı, sorumlulukların ayrılığı (Separation of Concerns) ilkesine göre düzenlenmiştir:
 
-2.  **Configure Database**
-    *   Update the connection string in `appsettings.json` (or `appsettings.Development.json`) to point to your SQL Server instance.
-    ```json
-    "ConnectionStrings": {
-      "DefaultConnection": "Server=YOUR_SERVER;Database=MyAcademyCQRSDB;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True"
-    }
-    ```
+*   **CQRSProject**: Ana Web Uygulaması
+    *   `CQRSPattern`: `Commands` (Komutlar), `Queries` (Sorgular), `Handlers` (İşleyiciler) ve `Results` (DTO'lar) klasörlerini içerir.
+    *   `Entities`: Veritabanı tablolarına karşılık gelen sınıflar.
+    *   `Patterns`: UnitOfWork ve Observer desenlerinin implementasyonları.
+    *   `Services`: Cloudinary gibi harici servisler.
+    *   `Mappings`: AutoMapper profilleri.
 
-3.  **Configure Cloudinary (Optional)**
-    *   If you want to use image upload features, add your Cloudinary credentials to `appsettings.Development.json` (this file is git-ignored for security).
-    ```json
-    "Cloudinary": {
-      "CloudName": "YOUR_CLOUD_NAME",
-      "ApiKey": "YOUR_API_KEY",
-      "ApiSecret": "YOUR_API_SECRET"
-    }
-    ```
+## 📷 Ekran Görüntüleri
 
-4.  **Run Migrations (Optional)**
-    *   The project is configured to potentially auto-create the DB or you can run:
-    ```bash
-    dotnet ef database update
-    ```
-
-5.  **Run the Application**
-    *   Open the solution in Visual Studio and run the project (`Ctrl + F5`).
-    *   The application includes a **Data Seeder** that will populate the database with sample Turkish data (Categories, Products, Testimonials, etc.) on the first run.
-
-## 🏗️ Architecture Overview
-
-The project structure follows a clean separation of concerns:
-
-*   **CQRSProject**: Main Web Application
-    *   `CQRSPattern`: Contains `Commands`, `Queries`, `Handlers` and `Results` (DTOs).
-    *   `Entities`: Database models.
-    *   `Context`: EF Core DbContext.
-    *   `Patterns`: Implementations of UnitOfWork, Observer, etc.
-    *   `Services`: External services like Cloudinary.
-    *   `Mappings`: AutoMapper profiles.
-
----
-*Developed by [Emin]*
