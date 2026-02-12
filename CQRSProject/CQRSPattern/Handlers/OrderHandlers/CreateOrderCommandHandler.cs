@@ -28,7 +28,7 @@ namespace CQRSProject.CQRSPattern.Handlers.OrderHandlers
                 CustomerEmail = command.CustomerEmail,
                 CustomerPhone = command.CustomerPhone,
                 ShippingAddress = command.ShippingAddress,
-                Status = "Pending",
+                Status = "Beklemede",
                 CreatedAt = DateTime.UtcNow,
                 OrderItems = command.OrderItems.Select(x => new OrderItem
                 {

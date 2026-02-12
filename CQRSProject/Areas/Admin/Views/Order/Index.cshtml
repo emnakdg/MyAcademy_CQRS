@@ -32,7 +32,15 @@
                                         <p class="text-xs text-secondary mb-0">@item.CustomerEmail</p>
                                     </td>
                                     <td><p class="text-xs font-weight-bold mb-0">@item.TotalAmount.ToString("C")</p></td>
-                                    <td class="align-middle text-center"><span class="badge badge-sm bg-gradient-success">@item.Status</span></td>
+                                    <td class="align-middle text-center">
+                                        @{
+                                            string statusClass = "bg-gradient-secondary";
+                                            if (item.Status == "Beklemede") statusClass = "bg-gradient-warning";
+                                            else if (item.Status == "Tamamlandı") statusClass = "bg-gradient-success";
+                                            else if (item.Status == "İptal Edildi") statusClass = "bg-gradient-danger";
+                                        }
+                                        <span class="badge badge-sm @statusClass">@item.Status</span>
+                                    </td>
                                     <td class="align-middle text-center"><span class="text-secondary text-xs">@item.CreatedAt.ToString("dd/MM/yyyy HH:mm")</span></td>
                                     <td class="align-middle text-center">
                                         <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info mb-0"><i class="material-icons text-sm">visibility</i></a>

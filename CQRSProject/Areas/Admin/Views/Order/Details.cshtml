@@ -16,7 +16,16 @@
                 </div>
                 <div class="row mb-3">
                     <div class="col-md-6"><strong>Telefon:</strong> @Model.CustomerPhone</div>
-                    <div class="col-md-6"><strong>Durum:</strong> <span class="badge bg-gradient-success">@Model.Status</span></div>
+                    <div class="col-md-6">
+                        <strong>Durum:</strong> 
+                        @{
+                            string statusClass = "bg-gradient-secondary";
+                            if (Model.Status == "Beklemede") statusClass = "bg-gradient-warning";
+                            else if (Model.Status == "Tamamlandı") statusClass = "bg-gradient-success";
+                            else if (Model.Status == "İptal Edildi") statusClass = "bg-gradient-danger";
+                        }
+                        <span class="badge @statusClass">@Model.Status</span>
+                    </div>
                 </div>
                 <div class="row mb-3">
                     <div class="col-md-6"><strong>Adres:</strong> @Model.ShippingAddress</div>

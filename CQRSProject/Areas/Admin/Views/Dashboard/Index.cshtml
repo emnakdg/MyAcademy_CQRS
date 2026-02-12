@@ -111,7 +111,13 @@
                                         </td>
                                         <td><p class="text-xs font-weight-bold mb-0">@order.TotalAmount.ToString("C")</p></td>
                                         <td class="align-middle text-center text-sm">
-                                            <span class="badge badge-sm bg-gradient-success">@order.Status</span>
+                                            @{
+                                                string statusClass = "bg-gradient-secondary";
+                                                if (order.Status == "Beklemede") statusClass = "bg-gradient-warning";
+                                                else if (order.Status == "Tamamlandı") statusClass = "bg-gradient-success";
+                                                else if (order.Status == "İptal Edildi") statusClass = "bg-gradient-danger";
+                                            }
+                                            <span class="badge badge-sm @statusClass">@order.Status</span>
                                         </td>
                                         <td class="align-middle text-center">
                                             <span class="text-secondary text-xs font-weight-bold">@order.CreatedAt.ToString("dd/MM/yyyy")</span>
