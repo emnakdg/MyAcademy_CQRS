@@ -1,0 +1,171 @@
+@model List<CQRSProject.Models.CartItem>
+@{
+    ViewData["Title"] = "Sepetim";
+    Layout = "~/Views/Shared/_BageryLayout.cshtml";
+}
+
+<section class="page-title" style="background-image: url(https://azim.commonsupport.com/Bagery/assets/images/background/page-title.jpg);">
+    <div class="auto-container">
+        <div class="content-box">
+            <div class="title">
+                <h1>Sepetim</h1>
+            </div>
+            <ul class="bread-crumb clearfix">
+                <li><a asp-controller="Home" asp-action="Index">Ana Sayfa</a></li>
+                <li><a asp-controller="Shop" asp-action="Index">Mağaza</a></li>
+                <li>Sepetim</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section class="cart-section sec-pad">
+    <div class="auto-container">
+        @if (Model != null && Model.Any())
+        {
+            <div class="table-responsive">
+                <table class="table cart-table" id="cartTable">
+                    <thead>
+                        <tr>
+                            <th>Ürün</th>
+                            <th>Fiyat</th>
+                            <th>Miktar</th>
+                            <th>Toplam</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr data-product-id="@item.ProductId">
+                                <td class="product-info">
+                                    <div class="d-flex align-items-center">
+                                        <img src="@(string.IsNullOrEmpty(item.ImageUrl) ? "https://azim.commonsupport.com/Bagery/assets/images/resource/shop/shop-1.jpg" : item.ImageUrl)" 
+                                             alt="@item.ProductName" class="cart-img">
+                                        <span class="product-name ml-3">@item.ProductName</span>
+                                    </div>
+                                </td>
+                                <td class="item-price">@item.Price.ToString("C")</td>
+                                <td class="item-quantity">
+                                    <div class="quantity-controls">
+                                        <button type="button" class="qty-btn qty-minus" data-id="@item.ProductId">
+                                            <i class="fas fa-minus"></i>
+                                        </button>
+                                        <input type="number" class="qty-input" value="@item.Quantity" min="1" max="99" 
+                                               data-id="@item.ProductId" readonly>
+                                        <button type="button" class="qty-btn qty-plus" data-id="@item.ProductId">
+                                            <i class="fas fa-plus"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                                <td class="item-total">@item.Total.ToString("C")</td>
+                                <td>
+                                    <button type="button" class="remove-btn" data-id="@item.ProductId" title="Kaldır">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="cart-summary">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <a asp-controller="Shop" asp-action="Index" class="btn-continue">
+                            <i class="fas fa-arrow-left"></i> Alışverişe Devam Et
+                        </a>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="summary-box">
+                            <h4>Sepet Özeti</h4>
+                            <div class="summary-row">
+                                <span>Toplam</span>
+                                <span class="cart-total-amount" id="cartTotalAmount">@Model.Sum(x => x.Total).ToString("C")</span>
+                            </div>
+                            <a asp-controller="Cart" asp-action="Checkout" class="btn-checkout">
+                                Siparişi Tamamla <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="empty-cart text-center">
+                <i class="fas fa-shopping-cart empty-cart-icon"></i>
+                <h3>Sepetiniz Boş</h3>
+                <p>Henüz sepetinize ürün eklemediniz.</p>
+                <a asp-controller="Shop" asp-action="Index" class="theme-btn-one">Alışverişe Başla</a>
+            </div>
+        }
+    </div>
+</section>
+
+@section Styles {
+}
+
+@section Scripts {
+<script>
+    $(document).ready(function() {
+        function updateQuantity(productId, quantity) {
+            $.post('/Cart/UpdateQuantity', { productId: productId, quantity: quantity }, function(res) {
+                if (res.success) {
+                    var row = $('tr[data-product-id="' + productId + '"]');
+                    row.find('.item-total').text(formatCurrency(res.itemTotal));
+                    $('#cartTotalAmount').text(formatCurrency(res.cartTotal));
+                    updateHeaderBadge(res.cartCount);
+                    if (res.cartEmpty) location.reload();
+                }
+            });
+        }
+
+        $('.qty-plus').click(function() {
+            var id = $(this).data('id');
+            var input = $(this).siblings('.qty-input');
+            var val = parseInt(input.val()) + 1;
+            input.val(val);
+            updateQuantity(id, val);
+        });
+
+        $('.qty-minus').click(function() {
+            var id = $(this).data('id');
+            var input = $(this).siblings('.qty-input');
+            var val = parseInt(input.val()) - 1;
+            if (val < 1) val = 1;
+            input.val(val);
+            updateQuantity(id, val);
+        });
+
+        $('.remove-btn').click(function() {
+            var id = $(this).data('id');
+            var row = $('tr[data-product-id="' + id + '"]');
+            $.post('/Cart/RemoveFromCart', { productId: id }, function(res) {
+                if (res.success) {
+                    row.fadeOut(300, function() { 
+                        $(this).remove();
+                        if (res.cartEmpty) location.reload();
+                    });
+                    $('#cartTotalAmount').text(formatCurrency(res.cartTotal));
+                    updateHeaderBadge(res.cartCount);
+                }
+            });
+        });
+
+        function formatCurrency(val) {
+            return '₺' + parseFloat(val).toFixed(2).replace('.', ',');
+        }
+
+        function updateHeaderBadge(count) {
+            $('.cart-badge').text(count);
+            if (count > 0) {
+                $('.cart-badge').show();
+            } else {
+                $('.cart-badge').hide();
+            }
+        }
+    });
+</script>
+}

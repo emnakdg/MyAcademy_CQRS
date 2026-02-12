@@ -1,0 +1,281 @@
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+
+    <title>@ViewData["Title"] - Bagery</title>
+
+    <link rel="icon" href="/Bagery-Template/Bagery/assets/images/favicon.ico" type="image/x-icon">
+
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,400;0,600;0,700;0,800;0,900;1,300;1,400;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,700;0,900;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+
+    <link href="~/Bagery-Template/Bagery/assets/css/font-awesome-all.css" rel="stylesheet">
+    <link href="~/Bagery-Template/Bagery/assets/css/flaticon.css" rel="stylesheet">
+    <link href="~/Bagery-Template/Bagery/assets/css/owl.css" rel="stylesheet">
+    <link href="~/Bagery-Template/Bagery/assets/css/bootstrap.css" rel="stylesheet">
+    <link href="~/Bagery-Template/Bagery/assets/css/jquery.fancybox.min.css" rel="stylesheet">
+    <link href="~/Bagery-Template/Bagery/assets/css/animate.css" rel="stylesheet">
+    <link href="~/Bagery-Template/Bagery/assets/css/color.css" rel="stylesheet">
+    <link href="~/Bagery-Template/Bagery/assets/css/nice-select.css" rel="stylesheet">
+    <link href="~/Bagery-Template/Bagery/assets/css/global.css" rel="stylesheet">
+    <link href="~/Bagery-Template/Bagery/assets/css/style.css" rel="stylesheet">
+    <link href="~/Bagery-Template/Bagery/assets/css/responsive.css" rel="stylesheet">
+    <link href="~/css/custom.css" rel="stylesheet">
+
+
+    @await RenderSectionAsync("Styles", required: false)
+</head>
+
+<body>
+    <div class="boxed_wrapper">
+        <div class="loader-wrap">
+            <div class="preloader">
+                <div class="preloader-close">Preloader Close</div>
+                <div id="handle-preloader" class="handle-preloader">
+                    <div class="animation-preloader">
+                        <div class="spinner"></div>
+                        <div class="txt-loading">
+                            <span data-text-preloader="B" class="letters-loading">B</span>
+                            <span data-text-preloader="A" class="letters-loading">A</span>
+                            <span data-text-preloader="G" class="letters-loading">G</span>
+                            <span data-text-preloader="E" class="letters-loading">E</span>
+                            <span data-text-preloader="R" class="letters-loading">R</span>
+                            <span data-text-preloader="Y" class="letters-loading">Y</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <header class="main-header style-one">
+            <div class="header-lower">
+                <div class="outer-box">
+                    <div class="logo-box">
+                        <figure class="logo"><a asp-controller="Home" asp-action="Index"><img src="/Bagery-Template/Bagery/assets/images/logo.png" alt=""></a></figure>
+                    </div>
+                    <div class="menu-area">
+                        <div class="mobile-nav-toggler">
+                            <i class="icon-bar"></i>
+                            <i class="icon-bar"></i>
+                            <i class="icon-bar"></i>
+                        </div>
+                        <nav class="main-menu navbar-expand-md navbar-light">
+                            <div class="collapse navbar-collapse show clearfix" id="navbarSupportedContent">
+                                <ul class="navigation clearfix">
+                                    <li class="@(ViewContext.RouteData.Values["action"]?.ToString() == "Index" ? "current" : "")">
+                                        <a asp-controller="Home" asp-action="Index">Ana Sayfa</a>
+                                    </li>
+                                    <li class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Shop" ? "current" : "")">
+                                        <a asp-controller="Shop" asp-action="Index">Mağaza</a>
+                                    </li>
+                                    <li class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Contact" ? "current" : "")">
+                                        <a asp-controller="Contact" asp-action="Index">İletişim</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </nav>
+                    </div>
+                    <ul class="menu-right-content clearfix">
+                        <li class="search-box-outer">
+                            <div class="dropdown">
+                                <button class="search-box-btn" style="background-image: url(/Bagery-Template/Bagery/assets/images/icons/icon-bg-1.png);" type="button" id="dropdownMenu3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icon-Search"></i></button>
+                                <div class="dropdown-menu search-panel" aria-labelledby="dropdownMenu3">
+                                    <div class="form-container">
+                                        <form method="get" asp-controller="Shop" asp-action="Index">
+                                            <div class="form-group">
+                                                <input type="search" name="search" value="" placeholder="Ara...." required="">
+                                                <button type="submit" class="search-btn"><span class="fas fa-search"></span></button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="cart-btn">
+                            <a asp-controller="Cart" asp-action="Index" style="background-image: url(/Bagery-Template/Bagery/assets/images/icons/icon-bg-1.png); position: relative;">
+                                <i class="icon-Bag"></i>
+                                <span class="cart-badge" style="position:absolute;top:-5px;right:-5px;background:#e8382e;color:#fff;border-radius:50%;width:20px;height:20px;font-size:11px;display:none;align-items:center;justify-content:center;font-weight:700;line-height:20px;text-align:center;">0</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="sticky-header">
+                <div class="outer-box">
+                    <div class="logo-box">
+                        <figure class="logo"><a asp-controller="Home" asp-action="Index"><img src="/Bagery-Template/Bagery/assets/images/small-logo.png" alt=""></a></figure>
+                    </div>
+                    <div class="menu-area">
+                        <nav class="main-menu clearfix">
+                        </nav>
+                    </div>
+                    <ul class="menu-right-content clearfix">
+                        <li class="search-box-outer">
+                            <div class="dropdown">
+                                <button class="search-box-btn" style="background-image: url(/Bagery-Template/Bagery/assets/images/icons/icon-bg-1.png);" type="button" id="dropdownMenu4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icon-Search"></i></button>
+                                <div class="dropdown-menu search-panel" aria-labelledby="dropdownMenu4">
+                                    <div class="form-container">
+                                        <form method="get" asp-controller="Shop" asp-action="Index">
+                                            <div class="form-group">
+                                                <input type="search" name="search" value="" placeholder="Ara...." required="">
+                                                <button type="submit" class="search-btn"><span class="fas fa-search"></span></button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="cart-btn">
+                            <a asp-controller="Cart" asp-action="Index" style="background-image: url(/Bagery-Template/Bagery/assets/images/icons/icon-bg-1.png); position: relative;">
+                                <i class="icon-Bag"></i>
+                                <span class="cart-badge" style="position:absolute;top:-5px;right:-5px;background:#e8382e;color:#fff;border-radius:50%;width:20px;height:20px;font-size:11px;display:none;align-items:center;justify-content:center;font-weight:700;line-height:20px;text-align:center;">0</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </header>
+
+        <div class="mobile-menu">
+            <div class="menu-backdrop"></div>
+            <div class="close-btn"><i class="fas fa-times"></i></div>
+            <nav class="menu-box">
+                <div class="nav-logo"><a asp-controller="Home" asp-action="Index"><img src="/Bagery-Template/Bagery/assets/images/logo-3.png" alt="" title=""></a></div>
+                <div class="menu-outer"></div>
+                <div class="contact-info">
+                    <h4>İletişim Bilgileri</h4>
+                    <ul>
+                        <li>İstanbul, Türkiye</li>
+                        <li><a href="tel:+905551234567">+90 555 123 45 67</a></li>
+                        <li><a href="mailto:info@bagery.com">info@bagery.com</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+
+        @RenderBody()
+
+        <footer class="main-footer" style="background-image: url(https://azim.commonsupport.com/Bagery/assets/images/background/footer-1.jpg);">
+            <div class="subscribe-section">
+                <div class="auto-container">
+                    <div class="inner-container">
+                        <div class="row clearfix">
+                            <div class="col-lg-6 col-md-12 col-sm-12 text-column">
+                                <h2>Bültenimize Abone Olun</h2>
+                            </div>
+                            <div class="col-lg-6 col-md-12 col-sm-12 form-column">
+                                <form method="post" class="subscribe-form">
+                                    <div class="form-group">
+                                        <input type="email" name="email" placeholder="E-posta adresiniz" required="">
+                                        <button type="submit" class="theme-btn-one">Abone Ol</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="auto-container">
+                <div class="footer-top">
+                    <div class="row clearfix">
+                        <div class="col-lg-3 col-md-6 col-sm-12 footer-column">
+                            <div class="footer-widget logo-widget">
+                                <figure class="footer-logo"><a asp-controller="Home" asp-action="Index"><img src="https://azim.commonsupport.com/Bagery/assets/images/footer-logo.png" alt=""></a></figure>
+                                <div class="text">
+                                    <p>Geleneksel lezzetleri modern sunumlarla buluşturuyoruz. 1990'dan beri hizmetinizdeyiz.</p>
+                                </div>
+                                <ul class="social-links clearfix">
+                                    <li><a href="#"><i class="fab fa-google-plus-g"></i></a></li>
+                                    <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                                    <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-12 footer-column">
+                            <div class="footer-widget contact-widget">
+                                <div class="widget-title">
+                                    <h4>İletişim</h4>
+                                </div>
+                                <div class="widget-content">
+                                    <p>Bağdat Caddesi, No:20<br>Kadıköy, İstanbul</p>
+                                    <p><a href="mailto:info@bagery.com">info@bagery.com</a></p>
+                                    <p><a href="tel:+902125551234">+90 (212) 555 12 34</a></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-12 footer-column">
+                            <div class="footer-widget links-widget">
+                                <div class="widget-title">
+                                    <h4>Hızlı Bağlantılar</h4>
+                                </div>
+                                <div class="widget-content">
+                                    <ul class="links-list clearfix">
+                                        <li><a asp-controller="Home" asp-action="Index">Hakkımızda</a></li>
+                                        <li><a asp-controller="Home" asp-action="Index">Biz Kimiz</a></li>
+                                        <li><a asp-controller="Contact" asp-action="Index">Bize Ulaşın</a></li>
+                                        <li><a asp-controller="Shop" asp-action="Index">Hizmetler</a></li>
+                                        <li><a href="#">Gizlilik Politikası</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-12 footer-column">
+                            <div class="footer-widget timing-widget">
+                                <div class="widget-title">
+                                    <h4>Çalışma Saatleri</h4>
+                                </div>
+                                <div class="widget-content">
+                                    <ul class="timing-list clearfix">
+                                        <li>Pazartesi: <span>08:00 - 22:00</span></li>
+                                        <li>Salı: <span>08:00 - 22:00</span></li>
+                                        <li>Çarşamba: <span>08:00 - 22:00</span></li>
+                                        <li>Perşembe: <span>08:00 - 22:00</span></li>
+                                        <li>Cuma: <span>08:00 - 22:00</span></li>
+                                        <li>Haftasonu: <span>09:00 - 23:00</span></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <button class="scroll-top scroll-to-target" data-target="html">
+            <span class="fal fa-long-arrow-up"></span>
+        </button>
+    </div>
+
+    <script src="~/Bagery-Template/Bagery/assets/js/jquery.js"></script>
+    <script src="~/Bagery-Template/Bagery/assets/js/popper.min.js"></script>
+    <script src="~/Bagery-Template/Bagery/assets/js/bootstrap.min.js"></script>
+    <script src="~/Bagery-Template/Bagery/assets/js/owl.js"></script>
+    <script src="~/Bagery-Template/Bagery/assets/js/wow.js"></script>
+    <script src="~/Bagery-Template/Bagery/assets/js/validation.js"></script>
+    <script src="~/Bagery-Template/Bagery/assets/js/jquery.fancybox.js"></script>
+    <script src="~/Bagery-Template/Bagery/assets/js/appear.js"></script>
+    <script src="~/Bagery-Template/Bagery/assets/js/scrollbar.js"></script>
+    <script src="~/Bagery-Template/Bagery/assets/js/jquery.nice-select.min.js"></script>
+    <script src="~/Bagery-Template/Bagery/assets/js/script.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $.get('/Cart/GetCartCount', function(res) {
+                if (res.count > 0) {
+                    $('.cart-badge').text(res.count).css('display', 'flex');
+                }
+            });
+        });
+    </script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

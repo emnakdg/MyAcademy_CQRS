@@ -1,0 +1,117 @@
+@model CQRSProject.Models.CheckoutViewModel
+@{
+    ViewData["Title"] = "Sipariş";
+    Layout = "~/Views/Shared/_BageryLayout.cshtml";
+}
+
+<section class="page-title" style="background-image: url(https://azim.commonsupport.com/Bagery/assets/images/background/page-title.jpg);">
+    <div class="auto-container">
+        <div class="content-box">
+            <div class="title">
+                <h1>Sipariş</h1>
+            </div>
+            <ul class="bread-crumb clearfix">
+                <li><a asp-controller="Home" asp-action="Index">Ana Sayfa</a></li>
+                <li><a asp-controller="Cart" asp-action="Index">Sepetim</a></li>
+                <li>Sipariş</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section class="checkout-section sec-pad">
+    <div class="auto-container">
+        <form asp-controller="Cart" asp-action="Checkout" method="post">
+            @Html.AntiForgeryToken()
+
+            @if (!ViewData.ModelState.IsValid)
+            {
+                <div class="alert alert-danger">
+                    <ul class="mb-0">
+                        @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                        {
+                            <li>@error.ErrorMessage</li>
+                        }
+                    </ul>
+                </div>
+            }
+
+            <div class="row clearfix">
+                <div class="col-lg-7 col-md-12">
+                    <div class="checkout-form-box">
+                        <h3 class="checkout-title">Müşteri Bilgileri</h3>
+                        
+                        <div class="form-group">
+                            <label asp-for="CustomerName"></label>
+                            <input asp-for="CustomerName" class="form-control" placeholder="Adınız ve Soyadınız" />
+                            <span asp-validation-for="CustomerName" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="CustomerEmail"></label>
+                            <input asp-for="CustomerEmail" class="form-control" placeholder="ornek@email.com" />
+                            <span asp-validation-for="CustomerEmail" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="CustomerPhone"></label>
+                            <input asp-for="CustomerPhone" class="form-control" placeholder="+90 5XX XXX XX XX" />
+                            <span asp-validation-for="CustomerPhone" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="ShippingAddress"></label>
+                            <textarea asp-for="ShippingAddress" class="form-control" rows="3" placeholder="Teslimat adresinizi yazınız..."></textarea>
+                            <span asp-validation-for="ShippingAddress" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-5 col-md-12">
+                    <div class="order-summary-box">
+                        <h3 class="checkout-title">Sipariş Özeti</h3>
+
+                        <div class="order-items">
+                            @foreach (var item in Model.CartItems)
+                            {
+                                <div class="order-item">
+                                    <div class="d-flex align-items-center">
+                                        <img src="@(string.IsNullOrEmpty(item.ImageUrl) ? "https://azim.commonsupport.com/Bagery/assets/images/resource/shop/shop-1.jpg" : item.ImageUrl)" 
+                                             alt="@item.ProductName" class="order-item-img">
+                                        <div class="order-item-info">
+                                            <h5>@item.ProductName</h5>
+                                            <span>@item.Quantity x @item.Price.ToString("C")</span>
+                                        </div>
+                                    </div>
+                                    <div class="order-item-total">
+                                        @item.Total.ToString("C")
+                                    </div>
+                                </div>
+                            }
+                        </div>
+
+                        <div class="order-total">
+                            <span>Genel Toplam</span>
+                            <span class="total-price">@Model.TotalAmount.ToString("C")</span>
+                        </div>
+
+                        <button type="submit" class="btn-place-order">
+                            <i class="fas fa-check-circle"></i> Siparişi Onayla
+                        </button>
+
+                        <a asp-controller="Cart" asp-action="Index" class="btn-back-cart">
+                            <i class="fas fa-arrow-left"></i> Sepete Dön
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+
+@section Styles {
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

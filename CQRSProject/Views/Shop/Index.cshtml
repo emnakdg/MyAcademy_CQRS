@@ -1,0 +1,144 @@
+@model List<CQRSProject.Models.ProductViewModel>
+@{
+    ViewData["Title"] = "Mağaza";
+    Layout = "~/Views/Shared/_BageryLayout.cshtml";
+}
+
+<section class="page-title" style="background-image: url(https://azim.commonsupport.com/Bagery/assets/images/background/page-title.jpg);">
+    <div class="auto-container">
+        <div class="content-box">
+            <div class="title">
+                <h1>Mağazamız</h1>
+            </div>
+            <ul class="bread-crumb clearfix">
+                <li><a asp-controller="Home" asp-action="Index">Ana Sayfa</a></li>
+                <li>Mağaza</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section class="shop-page-section sec-pad">
+    <div class="auto-container">
+        <div class="row clearfix">
+            <div class="col-lg-3 col-md-12 col-sm-12 sidebar-side">
+                <div class="shop-sidebar">
+                    <div class="sidebar-widget category-widget">
+                        <div class="widget-title">
+                            <h4>Kategoriler</h4>
+                        </div>
+                        <div class="widget-content">
+                            <ul class="category-list clearfix">
+                                <li class="@(ViewBag.SelectedCategory == null ? "active" : "")">
+                                    <a asp-controller="Shop" asp-action="Index">Tüm Ürünler</a>
+                                </li>
+                                @if (ViewBag.Categories != null)
+                                {
+                                    @foreach (var category in ViewBag.Categories as List<CQRSProject.Entities.Category>)
+                                    {
+                                        <li class="@(ViewBag.SelectedCategory != null && (int)ViewBag.SelectedCategory == category.Id ? "active" : "")">
+                                            <a asp-controller="Shop" asp-action="Index" asp-route-categoryId="@category.Id">@category.Name</a>
+                                        </li>
+                                    }
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="sidebar-widget search-widget">
+                        <div class="widget-title">
+                            <h4>Arama</h4>
+                        </div>
+                        <div class="search-form">
+                            <form method="get" asp-controller="Shop" asp-action="Index">
+                                <div class="form-group">
+                                    <input type="search" name="search" value="@ViewBag.Search" placeholder="Ürün Ara..." required="">
+                                    <button type="submit"><i class="fas fa-search"></i></button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-9 col-md-12 col-sm-12 content-side">
+                <div class="our-shop">
+                    <div class="row clearfix">
+                        @if (Model != null && Model.Any())
+                        {
+                            @foreach (var product in Model)
+                            {
+                                <div class="col-lg-4 col-md-6 col-sm-12 shop-block">
+                                    <div class="shop-block-one">
+                                        <div class="inner-box">
+                                            <figure class="image-box">
+                                                <img src="@(string.IsNullOrEmpty(product.ImageUrl) ? "https://azim.commonsupport.com/Bagery/assets/images/resource/shop/shop-1.jpg" : product.ImageUrl)" alt="@product.Name">
+                                                <ul class="info-list clearfix">                                                    
+                                                </ul>
+                                            </figure>
+                                            <div class="lower-content">
+                                                <span class="category">@product.CategoryName</span>
+                                                <h3><a asp-controller="Shop" asp-action="Details" asp-route-id="@product.Id">@product.Name</a></h3>
+                                                <span class="price">@product.Price.ToString("C")</span>
+                                                <button type="button" class="btn-add-cart" data-id="@product.Id">
+                                                    <i class="fas fa-cart-plus"></i> Sepete Ekle
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="col-12">
+                                <div class="alert alert-info text-center">
+                                    <p>Henüz ürün bulunmamaktadır.</p>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="cart-toast" id="cartToast">
+    <i class="fas fa-check-circle"></i>
+    <span id="toastMessage"></span>
+</div>
+
+@section Styles {
+}
+
+@section Scripts {
+<script>
+    $(document).ready(function() {
+        function addToCart(productId, btn) {
+            $.post('/Cart/AddToCart', { productId: productId }, function(res) {
+                if (res.success) {
+                    $('#toastMessage').text(res.message);
+                    $('#cartToast').addClass('show');
+                    setTimeout(function() { $('#cartToast').removeClass('show'); }, 2500);
+
+                    $('.cart-badge').text(res.cartCount).show();
+
+                    if (btn) {
+                        var originalText = btn.html();
+                        btn.addClass('added').html('<i class="fas fa-check"></i> Eklendi!');
+                        setTimeout(function() { btn.removeClass('added').html(originalText); }, 1500);
+                    }
+                }
+            });
+        }
+
+        $('.btn-add-cart').click(function() {
+            addToCart($(this).data('id'), $(this));
+        });
+
+        $('.add-to-cart-btn').click(function(e) {
+            e.preventDefault();
+            addToCart($(this).data('id'), null);
+        });
+    });
+</script>
+}

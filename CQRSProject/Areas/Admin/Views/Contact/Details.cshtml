@@ -1,0 +1,23 @@
+@model CQRSProject.CQRSPattern.Results.ContactResults.GetContactByIdQueryResult
+@{ ViewData["Title"] = "Mesaj Detay"; }
+
+<div class="row">
+    <div class="col-lg-8 mx-auto">
+        <div class="card my-4">
+            <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
+                    <h6 class="text-white text-capitalize ps-3">Mesaj Detay</h6>
+                </div>
+            </div>
+            <div class="card-body">
+                <p><strong>Ad Soyad:</strong> @Model.Name</p>
+                <p><strong>E-posta:</strong> @Model.Email</p>
+                <p><strong>Konu:</strong> @Model.Subject</p>
+                <hr>
+                <p><strong>Mesaj:</strong></p>
+                <p>@Model.Message</p>
+                <a asp-action="Index" class="btn btn-outline-secondary mt-3">Geri Dön</a>
+            </div>
+        </div>
+    </div>
+</div>

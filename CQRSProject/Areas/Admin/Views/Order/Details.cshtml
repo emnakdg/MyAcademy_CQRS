@@ -1,0 +1,57 @@
+@model CQRSProject.CQRSPattern.Results.OrderResults.GetOrderByIdQueryResult
+@{ ViewData["Title"] = "Sipariş Detay #" + Model.Id; }
+
+<div class="row">
+    <div class="col-lg-8 mx-auto">
+        <div class="card my-4">
+            <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
+                    <h6 class="text-white text-capitalize ps-3">Sipariş #@Model.Id</h6>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row mb-3">
+                    <div class="col-md-6"><strong>Müşteri:</strong> @Model.CustomerName</div>
+                    <div class="col-md-6"><strong>E-posta:</strong> @Model.CustomerEmail</div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-6"><strong>Telefon:</strong> @Model.CustomerPhone</div>
+                    <div class="col-md-6"><strong>Durum:</strong> <span class="badge bg-gradient-success">@Model.Status</span></div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-6"><strong>Adres:</strong> @Model.ShippingAddress</div>
+                    <div class="col-md-6"><strong>Tarih:</strong> @Model.CreatedAt.ToString("dd/MM/yyyy HH:mm")</div>
+                </div>
+                <hr>
+                <h6>Sipariş Kalemleri</h6>
+                <div class="table-responsive">
+                    <table class="table align-items-center mb-0">
+                        <thead>
+                            <tr>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Ürün</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Adet</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Birim Fiyat</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Toplam</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.OrderItems)
+                            {
+                                <tr>
+                                    <td><p class="text-xs font-weight-bold mb-0">@item.Product?.Name</p></td>
+                                    <td><p class="text-xs font-weight-bold mb-0">@item.Quantity</p></td>
+                                    <td><p class="text-xs font-weight-bold mb-0">@item.UnitPrice.ToString("C")</p></td>
+                                    <td><p class="text-xs font-weight-bold mb-0">@((item.Quantity * item.UnitPrice).ToString("C"))</p></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="text-end mt-3">
+                    <h5>Toplam: @Model.TotalAmount.ToString("C")</h5>
+                </div>
+                <a asp-action="Index" class="btn btn-outline-secondary mt-3">Geri Dön</a>
+            </div>
+        </div>
+    </div>
+</div>

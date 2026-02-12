@@ -1,0 +1,99 @@
+@model CQRSProject.Entities.Order
+@{
+    ViewData["Title"] = "Sipariş Onayı";
+    Layout = "~/Views/Shared/_BageryLayout.cshtml";
+}
+
+<section class="page-title" style="background-image: url(https://azim.commonsupport.com/Bagery/assets/images/background/page-title.jpg);">
+    <div class="auto-container">
+        <div class="content-box">
+            <div class="title">
+                <h1>Sipariş Onayı</h1>
+            </div>
+            <ul class="bread-crumb clearfix">
+                <li><a asp-controller="Home" asp-action="Index">Ana Sayfa</a></li>
+                <li>Sipariş Onayı</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section class="confirmation-section sec-pad">
+    <div class="auto-container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="confirmation-box text-center">
+                    <div class="success-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h2>Siparişiniz Alındı!</h2>
+                    <p class="confirmation-text">Siparişiniz başarıyla oluşturuldu. En kısa sürede hazırlanacaktır.</p>
+
+                    <div class="order-details-box">
+                        <div class="order-detail-row">
+                            <span class="detail-label">Sipariş No</span>
+                            <span class="detail-value">#@Model.Id</span>
+                        </div>
+                        <div class="order-detail-row">
+                            <span class="detail-label">Ad Soyad</span>
+                            <span class="detail-value">@Model.CustomerName</span>
+                        </div>
+                        <div class="order-detail-row">
+                            <span class="detail-label">E-posta</span>
+                            <span class="detail-value">@Model.CustomerEmail</span>
+                        </div>
+                        <div class="order-detail-row">
+                            <span class="detail-label">Durum</span>
+                            <span class="detail-value status-badge">@Model.Status</span>
+                        </div>
+                        <div class="order-detail-row">
+                            <span class="detail-label">Tarih</span>
+                            <span class="detail-value">@Model.CreatedAt.ToString("dd.MM.yyyy HH:mm")</span>
+                        </div>
+                    </div>
+
+                    @if (Model.OrderItems != null && Model.OrderItems.Any())
+                    {
+                        <div class="order-items-summary">
+                            <h4>Sipariş Kalemleri</h4>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Ürün</th>
+                                        <th>Miktar</th>
+                                        <th>Birim Fiyat</th>
+                                        <th>Toplam</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.OrderItems)
+                                    {
+                                        <tr>
+                                            <td>@(item.Product?.Name ?? $"Ürün #{item.ProductId}")</td>
+                                            <td>@item.Quantity</td>
+                                            <td>@item.UnitPrice.ToString("C")</td>
+                                            <td>@((item.Quantity * item.UnitPrice).ToString("C"))</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+
+                    <div class="order-total-box">
+                        <span>Genel Toplam:</span>
+                        <span class="order-total-price">@Model.TotalAmount.ToString("C")</span>
+                    </div>
+
+                    <div class="confirmation-actions">
+                        <a asp-controller="Shop" asp-action="Index" class="theme-btn-one">Alışverişe Devam Et</a>
+                        <a asp-controller="Home" asp-action="Index" class="btn-home">Ana Sayfaya Dön</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Styles {
+}

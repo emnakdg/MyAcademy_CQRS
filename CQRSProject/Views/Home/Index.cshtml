@@ -1,0 +1,391 @@
+﻿@model CQRSProject.Models.HomeViewModel
+@{
+    ViewData["Title"] = "Ana Sayfa";
+    Layout = "~/Views/Shared/_BageryLayout.cshtml";
+}
+
+@section Styles {
+    <style>
+        @if (Model.Sliders != null && Model.Sliders.Count > 0)
+        {
+            for (int i = 0; i < Model.Sliders.Count; i++)
+            {
+                <text>
+        .slide-item.slide-@(i + 1) .image-layer {
+            background-color: @Model.Sliders[i].BackgroundColor !important;
+            background-image: none !important;
+        }
+                </text>
+            }
+        }
+    </style>
+    </style>
+}
+
+<section class="banner-section style-one">
+    <div class="banner-carousel owl-theme owl-carousel owl-dots-none nav-style-one">
+        @if (Model.Sliders != null && Model.Sliders.Any())
+        {
+            int sliderIndex = 0;
+            foreach (var slider in Model.Sliders)
+            {
+                sliderIndex++;
+                <div class="slide-item slide-@sliderIndex">
+                    <div class="image-layer"></div>
+                    <div class="anim-icon">
+                        <div class="icon icon-1" style="background-image: url(https://azim.commonsupport.com/Bagery/assets/images/icons/anim-icon-1.png);"></div>
+                        <div class="icon icon-2" style="background-image: url(https://azim.commonsupport.com/Bagery/assets/images/icons/anim-icon-2.png);"></div>
+                        <div class="icon icon-3" style="background-image: url(https://azim.commonsupport.com/Bagery/assets/images/icons/anim-icon-3.png);"></div>
+                        <div class="icon icon-4" style="background-image: url(https://azim.commonsupport.com/Bagery/assets/images/shape/shape-1.png);"></div>
+                        <div class="icon icon-5" style="background-image: url(https://azim.commonsupport.com/Bagery/assets/images/shape/shape-2.png);"></div>
+                    </div>
+                    <div class="auto-container">
+                        <div class="content-inner">
+                            <div class="content-box">
+                                <h1>@Html.Raw(slider.Title)</h1>
+                                <p>@slider.Description</p>
+                                <div class="btn-box">
+                                    <a href="@slider.ButtonUrl" class="banner-btn">@slider.ButtonText</a>
+                                </div>
+                            </div>
+                            <figure class="image-box"><img src="@slider.ImageUrl" alt=""></figure>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</section>
+
+<section class="feature-section">
+    <div class="auto-container">
+        <div class="row clearfix">
+            @if (Model.ThreeStepServices != null && Model.ThreeStepServices.Any())
+            {
+                foreach (var step in Model.ThreeStepServices)
+                {
+                    <div class="col-lg-4 col-md-6 col-sm-12 feature-block">
+                        <div class="feature-block-one wow fadeInUp animated" data-wow-delay="@((step.StepNumber - 1) * 200)ms" data-wow-duration="1500ms">
+                            <div class="inner-box">
+                                <div class="count-box" style="background-image: url(https://azim.commonsupport.com/Bagery/assets/images/icons/icon-bg-2.png);">
+                                    <h4>@step.StepNumber.ToString("00")</h4>
+                                </div>
+                                <div class="inner">
+                                    <h4>@step.Title</h4>
+                                    <p>@step.Description</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</section>
+
+@if (Model.OurHistory != null)
+{
+    <section class="ourstory-section sec-pad" style="background-image: url(https://azim.commonsupport.com/Bagery/assets/images/background/mission-1.jpg);">
+        <div class="auto-container">
+            <div class="sec-title centred">
+                <p>Hikayemiz</p>
+                <h2>1990'dan Beri Geleneksel<br />& Modern Hizmet</h2>
+            </div>
+            <div class="row align-items-center clearfix">
+                <div class="col-lg-4 col-md-6 col-sm-12 content-column">
+                    <div id="content_block_1">
+                        <div class="content-box">
+                            <h3>@Model.OurHistory.Title</h3>
+                            <p>@Model.OurHistory.Description</p>
+                            <figure class="signature"><img src="@Model.OurHistory.SignatureImageUrl" alt=""></figure>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12 image-column">
+                    <figure class="image-box wow slideInUp animated" data-wow-delay="00ms" data-wow-duration="1500ms">
+                        <img src="@Model.OurHistory.ImageUrl" alt="">
+                    </figure>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12 content-column">
+                    <div id="content_block_2">
+                        <div class="content-box">
+                            <h3>@Model.OurHistory.OverviewTitle</h3>
+                            <p>@Model.OurHistory.OverviewDescription</p>
+                            <ul class="list clearfix">
+                                @if (Model.OurHistory.OverviewItems != null)
+                                {
+                                    foreach (var item in Model.OurHistory.OverviewItems)
+                                    {
+                                        <li><i class="icon-Check-mark"></i>@item</li>
+                                    }
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="more-btn centred">
+                <a asp-controller="Contact" asp-action="Index" class="theme-btn-one">Bize Ulaşın</a>
+            </div>
+        </div>
+    </section>
+}
+
+<section class="shop-section" style="background-image: url(https://azim.commonsupport.com/Bagery/assets/images/background/shop-1.jpg);">
+    <div class="auto-container">
+        <div class="sec-title">
+            <p>Mağazamız</p>
+            <h2>Tüm Lezzetli<br />Ürünlerimiz.</h2>
+        </div>
+        <div class="four-item-carousel owl-carousel owl-theme owl-dots-none nav-style-one">
+            @if (Model.Products != null && Model.Products.Any())
+            {
+                foreach (var product in Model.Products)
+                {
+                    <div class="shop-block-one">
+                        <div class="inner-box">
+                            <figure class="image-box">
+                                <img src="@product.ImageUrl" alt="">
+                            </figure>
+                            <div class="lower-content">
+                                <span class="price-box">@product.Price.ToString("C0")</span>
+                                <h3><a asp-controller="Shop" asp-action="Index">@product.Name</a></h3>
+                                <ul class="rating clearfix">
+                                    <li><i class="icon-Star"></i></li>
+                                    <li><i class="icon-Star"></i></li>
+                                    <li><i class="icon-Star"></i></li>
+                                    <li><i class="icon-Star"></i></li>
+                                    <li><i class="icon-Star"></i></li>
+                                </ul>
+                                <div class="cart-btn"><a asp-controller="Shop" asp-action="Index" class="theme-btn-two">İncele</a></div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</section>
+
+<section class="service-section sec-pad centred" style="background-image: url(https://azim.commonsupport.com/Bagery/assets/images/background/service-1.jpg);">
+    <div class="auto-container">
+        <div class="sec-title">
+            <p>Hizmetler</p>
+            <h2>Hizmetlerimizde Kalite<br />ve Tutku!</h2>
+        </div>
+        <div class="row clearfix">
+            @if (Model.Services != null && Model.Services.Any())
+            {
+                int serviceIndex = 0;
+                foreach (var service in Model.Services)
+                {
+                    <div class="col-lg-3 col-md-6 col-sm-12 service-block">
+                        <div class="service-block-one">
+                            <div class="inner-box">
+                                <div class="icon-box wow fadeInDown animated" data-wow-delay="@(serviceIndex * 200)ms" data-wow-duration="1500ms">
+                                    <div class="bg-layer" style="background-image: url(https://azim.commonsupport.com/Bagery/assets/images/icons/icon-bg-3.png);"></div>
+                                    <i class="@service.Icon"></i>
+                                </div>
+                                <div class="lower-content wow fadeInUp animated" data-wow-delay="@(serviceIndex * 200)ms" data-wow-duration="1500ms">
+                                    <h3><a href="#">@service.Title</a></h3>
+                                    <p>@service.Description</p>
+                                    <div class="link"><a asp-controller="Shop" asp-action="Index" class="theme-btn-two">Devamını Oku</a></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    serviceIndex++;
+                }
+            }
+        </div>
+    </div>
+</section>
+
+<section class="project-section" style="background-image: url(https://azim.commonsupport.com/Bagery/assets/images/background/gallery-1.jpg);">
+    <div class="auto-container">
+        <div class="row clearfix">
+            <div class="col-lg-4 col-md-12 col-sm-12 content-column">
+                <div class="content-box">
+                    <div class="sec-title">
+                        <p>Fotoğraf Galerisi</p>
+                        <h2>Lezzet<br />Karemiz</h2>
+                    </div>
+                    <div class="text">
+                        <p>En taze ve lezzetli ürünlerimizden seçkiler. Mutfağımızdan kareler ve sunumlarımızdan örnekler.</p>
+                    </div>
+                    <div class="nav-box" id="gallery-nav-container">
+                        <button type="button" class="gallery-prev-btn" id="galleryPrev" style="width: 50px; height: 50px; background: #fff; border: 1px solid #e0e0e0; margin-right: 8px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-arrow-left" style="font-size: 16px; color: #333;"></i>
+                        </button>
+                        <button type="button" class="gallery-next-btn" id="galleryNext" style="width: 50px; height: 50px; background: #fff; border: 1px solid #e0e0e0; cursor: pointer; display: inline-flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-arrow-right" style="font-size: 16px; color: #333;"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8 col-md-12 col-sm-12 porject-column">
+                <div class="project-carousel owl-carousel owl-theme owl-dots-none nav-style-one">
+                    @if (Model.PhotoGalleries != null && Model.PhotoGalleries.Any())
+                    {
+                        foreach (var gallery in Model.PhotoGalleries)
+                        {
+                            <div class="project-block-one">
+                                <div class="inner-box">
+                                    <figure class="image-box">
+                                        <img src="@gallery.ImageUrl" alt="">
+                                    </figure>
+                                    <div class="lower-content">
+                                        <div class="view-btn"><a href="@gallery.ImageUrl" class="lightbox-image" data-fancybox="gallery"><i class="icon-Zoom"></i></a></div>
+                                        <h3><a href="#">@gallery.Title</a></h3>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="promotion-section" style="background-image: url(https://azim.commonsupport.com/Bagery/assets/images/background/promotion-1.jpg);">
+    <div class="auto-container">
+        <div class="sec-title centred">
+            <p>Fırsatlar</p>
+            <h2>Mevsimin En Tatlı<br />Kampanyaları</h2>
+        </div>
+        <div class="row clearfix">
+            @if (Model.Promotions != null && Model.Promotions.Any())
+            {
+                int promoIndex = 0;
+                foreach (var promo in Model.Promotions)
+                {
+                    var images = promo.ImageUrl.Split(',');
+                    if (promoIndex == 0)
+                    {
+                        <div class="col-lg-6 col-md-12 col-sm-12 promo-block">
+                            <div class="promo-block-one">
+                                <div class="inner-box">
+                                    <figure class="image-box">
+                                        @foreach (var img in images)
+                                        {
+                                            <img src="@img.Trim()" alt="">
+                                        }
+                                    </figure>
+                                    <div class="content-box">
+                                        <div class="price-box">
+                                            <span>%@promo.DiscountPercentage.ToString("0")</span>
+                                            <p>İndirim</p>
+                                        </div>
+                                        <h3>@promo.Title</h3>
+                                        <p>@promo.Description</p>
+                                        <div class="btn-box">
+                                            <a asp-controller="Shop" asp-action="Index" class="theme-btn-two">Sipariş Ver</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-lg-6 col-md-12 col-sm-12 promo-block">
+                            <div class="promo-block-one style-two">
+                                <div class="inner-box">
+                                    <div class="content-box">
+                                        <div class="price-box">
+                                            <span>%@promo.DiscountPercentage.ToString("0")</span>
+                                            <p>İndirim</p>
+                                        </div>
+                                        <h3>@promo.Title</h3>
+                                        <p>@promo.Description</p>
+                                        <div class="btn-box">
+                                            <a asp-controller="Shop" asp-action="Index" class="theme-btn-two">Sipariş Ver</a>
+                                        </div>
+                                    </div>
+                                    <figure class="image-box">
+                                        @foreach (var img in images)
+                                        {
+                                            <img src="@img.Trim()" alt="">
+                                        }
+                                    </figure>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    promoIndex++;
+                }
+            }
+        </div>
+    </div>
+</section>
+
+<section class="testimonial-section" style="background-image: url(https://azim.commonsupport.com/Bagery/assets/images/background/testimonial-1.jpg);">
+    <div class="auto-container">
+        <div class="row clearfix">
+            <div class="col-lg-6 col-md-12 col-sm-12 content-column">
+                <div class="content-box">
+                    <div class="sec-title">
+                        <p>Müşteri Yorumları</p>
+                        <h2>Müşterilerimiz Bagery Hakkında<br />Ne Diyor?</h2>
+                    </div>
+                    <div class="testimonial-content">
+                        <div class="single-item-carousel owl-carousel owl-theme owl-dots-none nav-style-two">
+                            @if (Model.Testimonials != null && Model.Testimonials.Any())
+                            {
+                                foreach (var testimonial in Model.Testimonials)
+                                {
+                                    <div class="testimonial-block-two">
+                                        <div class="inner-box">
+                                            <div class="icon-box"><i class="icon-Quote"></i></div>
+                                            <div class="text">
+                                                <p>@testimonial.Comment</p>
+                                            </div>
+                                            <div class="author-info">
+                                                <h4>@testimonial.CustomerName</h4>
+                                                <span>@testimonial.CustomerTitle</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-12 col-sm-12 image-column">
+                <div class="image-box">
+                    @if (Model.Testimonials != null && Model.Testimonials.Any())
+                    {
+                        <figure class="image"><img src="@Model.Testimonials.First().ImageUrl" alt=""></figure>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            // Connect custom navigation buttons to gallery carousel
+            setTimeout(function() {
+                var carousel = $('.project-carousel');
+                
+                // Hide default owl-nav
+                carousel.find('.owl-nav').hide();
+                
+                // Connect custom buttons
+                $('#galleryPrev').on('click', function() {
+                    carousel.trigger('prev.owl.carousel');
+                });
+                
+                $('#galleryNext').on('click', function() {
+                    carousel.trigger('next.owl.carousel');
+                });
+            }, 600);
+        });
+    </script>
+}

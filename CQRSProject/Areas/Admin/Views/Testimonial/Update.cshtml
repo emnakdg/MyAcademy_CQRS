@@ -1,0 +1,28 @@
+@model CQRSProject.CQRSPattern.Results.TestimonialResults.TestimonialResult
+@{ ViewData["Title"] = "Yorum Güncelle"; }
+
+<div class="row">
+    <div class="col-lg-8 col-md-10 mx-auto">
+        <div class="card my-4">
+            <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
+                    <h6 class="text-white text-capitalize ps-3">Yorum Güncelle</h6>
+                </div>
+            </div>
+            <div class="card-body">
+                <form asp-action="Update" method="post">
+                    <input type="hidden" name="Id" value="@Model.Id" />
+                    <div class="input-group input-group-outline my-3 is-filled"><label class="form-label">Müşteri Adı</label><input type="text" name="CustomerName" class="form-control" value="@Model.CustomerName" required></div>
+                    <div class="input-group input-group-outline my-3 is-filled"><label class="form-label">Unvan</label><input type="text" name="CustomerTitle" class="form-control" value="@Model.CustomerTitle"></div>
+                    <div class="input-group input-group-outline my-3 is-filled"><label class="form-label">Yorum</label><textarea name="Comment" class="form-control" rows="3" required>@Model.Comment</textarea></div>
+                    <div class="input-group input-group-outline my-3 is-filled"><label class="form-label">Görsel URL</label><input type="text" name="ImageUrl" class="form-control" value="@Model.ImageUrl"></div>
+                    <div class="input-group input-group-outline my-3 is-filled"><label class="form-label">Puan (1-5)</label><input type="number" name="Rating" class="form-control" min="1" max="5" value="@Model.Rating"></div>
+                    <div class="d-flex justify-content-between">
+                        <a asp-action="Index" class="btn btn-outline-secondary">Geri Dön</a>
+                        <button type="submit" class="btn bg-gradient-primary">Güncelle</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

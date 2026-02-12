@@ -1,0 +1,48 @@
+@model List<CQRSProject.CQRSPattern.Results.OrderResults.GetOrderQueryResult>
+@{ ViewData["Title"] = "Siparişler"; }
+
+<div class="row">
+    <div class="col-12">
+        <div class="card my-4">
+            <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
+                    <h6 class="text-white text-capitalize ps-3">Siparişler</h6>
+                </div>
+            </div>
+            <div class="card-body px-0 pb-2">
+                <div class="table-responsive p-0">
+                    <table class="table align-items-center mb-0">
+                        <thead>
+                            <tr>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">#</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Müşteri</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Toplam</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Durum</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tarih</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">İşlem</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td><div class="d-flex px-2 py-1"><span class="text-secondary text-xs font-weight-bold">@item.Id</span></div></td>
+                                    <td>
+                                        <h6 class="mb-0 text-sm">@item.CustomerName</h6>
+                                        <p class="text-xs text-secondary mb-0">@item.CustomerEmail</p>
+                                    </td>
+                                    <td><p class="text-xs font-weight-bold mb-0">@item.TotalAmount.ToString("C")</p></td>
+                                    <td class="align-middle text-center"><span class="badge badge-sm bg-gradient-success">@item.Status</span></td>
+                                    <td class="align-middle text-center"><span class="text-secondary text-xs">@item.CreatedAt.ToString("dd/MM/yyyy HH:mm")</span></td>
+                                    <td class="align-middle text-center">
+                                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info mb-0"><i class="material-icons text-sm">visibility</i></a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
